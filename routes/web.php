@@ -12,5 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    $trans = DB::table('ltm_translations')->select('locale')->distinct()->get();
+    return view('welcome')->with('trans', $trans);
 });
+
+Route::post('update', 'LanguageController@postUpdate')->name('postUpdate');
+Route::get('update/{locale}', 'LanguageController@update')->name('update');
+Route::post('insert', 'LanguageController@postInsert')->name('postInsert');
