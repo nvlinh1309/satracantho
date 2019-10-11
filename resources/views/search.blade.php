@@ -8,10 +8,9 @@
 
     <!-- Fonts -->
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="{{ URL::asset('js/scripts.js') }}"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -71,6 +70,20 @@
 </head>
 <body>
 <div class="container">
+    <hr>
+    <form method="post" action="{{ route('postSearch') }}">
+        @csrf
+        <div class="input-group">
+            <input type="text" name="locale" id="search_keyword" value="{{ old('locale') }}" autocomplete="off" required class="form-control" placeholder="Enter your keyword...">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit">
+                    Search
+                </button>
+            </div>
+        </div>
+    </form>
+    <div id="keywordsList" style="position: absolute;">
+    </div>
     <table class="table">
         <thead>
         <tr>
@@ -82,19 +95,26 @@
         </tr>
         </thead>
         <tbody>
+        @if(isset($translations))
         @foreach($translations as $tran)
-        <tr>
-            <th scope="row">{{ $tran->id }}</th>
-            <td>{{ $tran->locale }}</td>
-            <td>{{ $tran->value }}</td>
-            <td>
+            <tr>
+                <th scope="row">{{ $tran->id }}</th>
+                <td>{{ $tran->locale }}</td>
+                <td>{{ $tran->value }}</td>
+                <td>
 
-                <input type="hidden" value="{{ $tran->locale }}" class="locale{{ $tran->id }}">
-                <input type="text" class="form-control translations" data-id="{{ $tran->id }}" value="{!! $tran->translation !!}">
-            </td>
-            <td><span style="font-size: 30px;color: green; display: none" class="fa fa-check-circle-o save{{$tran->id}}"></span></td>
-        </tr>
+                    <input type="hidden" value="{{ $tran->locale }}" class="locale{{ $tran->id }}">
+                    <input type="text" class="form-control translations" data-id="{{ $tran->id }}" value="{!! $tran->translation !!}">
+                </td>
+                <td><span style="font-size: 30px;color: green; display: none" class="fa fa-check-circle-o save{{$tran->id}}"></span></td>
+            </tr>
         @endforeach
+        @else
+            <tr>
+                <th scope="row" colspan="5"><i style="color: red">Please enter keywords</i> </th>
+
+            </tr>
+        @endif
         </tbody>
     </table>
 </div>

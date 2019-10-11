@@ -87,10 +87,13 @@
             Laravel
         </div>
 
+        {{ __("front.Login") }}
+
         <div class="links">
             @foreach($trans as $tr)
                 <a href="{{ route('update',['locale'=>$tr->locale]) }}"> {{ $tr->locale }}</a>
             @endforeach
+                <a href="{{ route('search') }}"> Update with keywords</a>
             <form method="post" action="{{ route('postInsert') }}">
                 @csrf
                 <div class="input-group mb-3">
@@ -100,7 +103,7 @@
                     </div>
                 </div>
             </form>
-
+                <a href="{{ route('keyword_manage') }}"> Keywords Manage</a>
         </div>
     </div>
 </div>

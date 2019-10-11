@@ -16,9 +16,10 @@ class CreateLtmTranslationsTable extends Migration
         Schema::create('ltm_translations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('status')->default(0);
-            $table->string('locale');
+            $table->string('locale')->nullable();
             $table->text('value')->nullable();
             $table->text('translation')->nullable();
+            $table->integer('parent_id')->default(0);
             $table->timestamps();
         });
     }
