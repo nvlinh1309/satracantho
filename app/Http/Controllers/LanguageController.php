@@ -65,7 +65,7 @@ class LanguageController extends Controller
     public function postUpdate(Request $request){
         $locale=$request->locale;
         $id = $request->id;
-        $value = $request->value;
+        $value = addslashes($request->value);
         $tran = Translation::find($id);
         $tran->translation = $value;
         $tran->save();

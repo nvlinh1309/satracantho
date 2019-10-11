@@ -90,7 +90,7 @@
             <td>
 
                 <input type="hidden" value="{{ $tran->locale }}" class="locale{{ $tran->id }}">
-                <input type="text" class="form-control translations" data-id="{{ $tran->id }}" value="{!! $tran->translation !!}">
+                <input type="text" class="form-control translations" data-id="{{ $tran->id }}" value="{{ stripslashes($tran->translation) }}">
             </td>
             <td><span style="font-size: 30px;color: green; display: none" class="fa fa-check-circle-o save{{$tran->id}}"></span></td>
         </tr>
